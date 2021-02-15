@@ -1,61 +1,160 @@
-import React from 'react';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-const PollHeader = ({ title, onTitleChange, userId }) => (
-  <div class="poll-header">
-    <div class="poll-title">
-      <input
-        class="poll-title-input"
-        value={title}
-        placeholder="Title"
-        onTitleChange={onTitleChange}
-      />
-    </div>
-    <div class="poll-user">{userId}</div>
-  </div>
+// import Modal from 'react-bootstrap/Modal';
+import PollBlock from './common-styles/PollBlock';
+import PollHeaderDiv from './common-styles/PollHeaderDiv';
+import PollHeaderBtn from './common-styles/PollHeaderBtn';
+import PollTitleBlock from './common-styles/PollTitleBlock';
+import PollBodyDiv from './common-styles/PollBodyDiv';
+import PollDatesBlock from './common-styles/PollDatesBlock';
+import PollFooterDiv from './common-styles/PollFooterDiv';
+import UserBlock from './common-styles/UserBlock';
+import ItemBlock from './common-styles/ItemBlock';
+
+const PollItemsBlock = styled.div`
+  width: 360px;
+
+  justify-self: center;
+`;
+
+const PollHeader = ({ pollId, userId, title, handleEditClick, handleInputEnter }) => (
+  <PollHeaderDiv>
+    {pollId && userId ? (
+      <PollHeaderBtn variant="warning" onClick={handleEditClick}>
+        Edit
+      </PollHeaderBtn>
+    ) : (
+      ''
+    )}
+    <PollTitleBlock
+      type="text"
+      value={title}
+      name="title"
+      placeholder="Title"
+      onKeyPress={handleInputEnter}></PollTitleBlock>
+    <UserBlock
+      type="text"
+      name="userId"
+      value={userId}
+      placeholder="who are you?"
+      onKeyPress={handleInputEnter}
+      disabled></UserBlock>
+  </PollHeaderDiv>
 );
 
-const PollBody = ({ startDate, endDate, items, onItemContentChange, onItemAdd, onItemDelete }) => (
-  <div class="poll-body">
-    <div class="poll-dates">
-      <span class="poll-startDate">{startDate}</span> ~ <span class="poll-endDate">{endDate}</span>
-    </div>
-    <div class="poll-items">
+const PollBody = ({
+  startDate,
+  endDate,
+  items,
+  handleItemEnter,
+  handleItemAdd,
+  handleItemDelete,
+}) => (
+  <PollBodyDiv>
+    <PollDatesBlock>
+      <span>{startDate}</span> ~ <span>{endDate}</span>
+    </PollDatesBlock>
+    <PollItemsBlock>
       {items.map((item) => (
-        <div class="poll-item">
-          <input type="text" placeholder="write an item" onChange={onItemContentChange} />
-          <button onClick={onItemDelete}>-</button>
+        <div key={item.id}>
+          <ItemBlock
+            type="text"
+            value={item.content}
+            name={item.id}
+            placeholder="write an item"
+            onKeyPress={handleItemEnter}
+          />
+          <button onClick={handleItemDelete}>-</button>
         </div>
       ))}
-    </div>
+    </PollItemsBlock>
     <div class="poll-item-add">
-      <button onClick={onItemAdd}>+</button>
+      <button onClick={handleItemAdd}>+</button>
     </div>
-  </div>
+  </PollBodyDiv>
 );
 
-const PollFooter = ({ onPollSave, onPollDiscard }) => (
-  <div class="poll-footer">
+const PollFooter = ({ handlePollSave, handleCancel }) => (
+  <PollFooterDiv>
     <div class="poll-button-list">
-      <button onPollDiscard={onPollDiscard}>Discard</button>
-      <button onPollSave={onPollSave}>Save</button>
+      <button onClick={handleCancel}>Discard</button>
+      <button onClick={handlePollSave}>Save</button>
     </div>
-  </div>
+  </PollFooterDiv>
 );
 
-const Poll = ({ userId, title, startDate, endDate, items, onPollSave, onPollDiscard }) => {
+const initialItems = [
+  {
+    id: 1,
+    content: null,
+  },
+  {
+    id: 2,
+    content: null,
+  },
+  {
+    id: 3,
+    content: null,
+  },
+];
+
+const Poll = ({ pollRedux, handlePollSave, handlePollDelete }) => {
+  const [poll, setPoll] = useState({
+    id: pollRedux ? pollRedux.id : null,
+    userId: pollRedux ? pollRedux.userId : null,
+    title: pollRedux ? pollRedux.title : null,
+    startDate: pollRedux ? pollRedux.startDate : null,
+    endDate: pollRedux ? pollRedux.endDate : null,
+    items: pollRedux ? pollRedux.items : initialItems,
+    result: pollRedux ? pollRedux.result : null,
+  });
+
+  const handleEditClick = (e) => {
+    console.log('e : ', e);
+  };
+
+  const handleInputEnter = (e) => {
+    if (e.key === 'Enter') {
+      e.target.disabled = true;
+    }
+  };
+
+  const handleItemEnter = (e) => {
+    console.log('e : ', e);
+  };
+
+  const handleItemAdd = (e) => {
+    console.log('e : ', e);
+  };
+
+  const handleItemDelete = (e) => {
+    console.log('e : ', e);
+  };
+
+  const handleCancel = (e) => {
+    console.log('e : ', e);
+  };
+
   return (
-    <div>
-      <PollHeader title={title} userId={userId} onTitleChange={onTitleChange} />
-      <PollBody
-        startDate={startDate}
-        endDate={endDate}
-        items={items}
-        onItemContentChange={onItemContentChange}
-        onItemAdd={onItemAdd}
-        onItemDelete={onItemDelete}
+    <PollBlock>
+      <PollHeader
+        title={poll.title}
+        pollId={poll.id}
+        userId={poll.userId}
+        handleEditClick={handleEditClick}
+        handleInputEnter={handleInputEnter}
       />
-      <PollFooter onPollSave={onPollSave} onPollDiscard={onPollDiscard} />
-    </div>
+      <PollBody
+        startDate={poll.startDate}
+        endDate={poll.endDate}
+        items={poll.items}
+        handleItemEnter={handleItemEnter}
+        handleItemAdd={handleItemAdd}
+        handleItemDelete={handleItemDelete}
+      />
+      <PollFooter handlePollSave={handlePollSave} handleCancel={handleCancel} />
+    </PollBlock>
   );
 };
 
