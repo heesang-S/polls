@@ -5,9 +5,10 @@ const PollBodyDiv = styled.div`
   height: ${(props) => props.height || '520px'};
 
   overflow-y: auto;
+  background-color: #f8f8f8;
   color: white;
 
-  dispaly: flex;
+  padding: 20px;
 `;
 
 export default PollBodyDiv;

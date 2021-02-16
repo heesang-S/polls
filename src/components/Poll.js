@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
 // import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+
 import PollBlock from './common-styles/PollBlock';
 import PollHeaderDiv from './common-styles/PollHeaderDiv';
-import PollHeaderBtn from './common-styles/PollHeaderBtn';
 import PollTitleBlock from './common-styles/PollTitleBlock';
 import PollBodyDiv from './common-styles/PollBodyDiv';
 import PollDatesBlock from './common-styles/PollDatesBlock';
@@ -13,32 +14,41 @@ import UserBlock from './common-styles/UserBlock';
 import ItemBlock from './common-styles/ItemBlock';
 
 const PollItemsBlock = styled.div`
-  width: 360px;
+  width: 100%;
 
-  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
-const PollHeader = ({ pollId, userId, title, handleEditClick, handleInputEnter }) => (
-  <PollHeaderDiv>
-    {pollId && userId ? (
-      <PollHeaderBtn variant="warning" onClick={handleEditClick}>
-        Edit
-      </PollHeaderBtn>
-    ) : (
-      ''
-    )}
+const ItemAddDeleteBtn = styled(Button)``;
+
+const PollButtonList = styled.div`
+  padding: 10px;
+
+  float: right;
+`;
+
+const PollFooterBtn = styled(Button)`
+  margin-left: 10px;
+`;
+
+const PollHeader = ({ pollId, userId, title, handleInputEnter }) => (
+  <PollHeaderDiv width="100%" height="50px">
     <PollTitleBlock
       type="text"
       value={title}
       name="title"
       placeholder="Title"
-      onKeyPress={handleInputEnter}></PollTitleBlock>
+      onKeyPress={handleInputEnter}
+      onChange={() => {}}></PollTitleBlock>
     <UserBlock
       type="text"
       name="userId"
       value={userId}
       placeholder="who are you?"
       onKeyPress={handleInputEnter}
+      onChange={() => {}}
       disabled></UserBlock>
   </PollHeaderDiv>
 );
@@ -56,7 +66,7 @@ const PollBody = ({
       <span>{startDate}</span> ~ <span>{endDate}</span>
     </PollDatesBlock>
     <PollItemsBlock>
-      {items.map((item) => (
+      {items.map((item, index) => (
         <div key={item.id}>
           <ItemBlock
             type="text"
@@ -64,50 +74,84 @@ const PollBody = ({
             name={item.id}
             placeholder="write an item"
             onKeyPress={handleItemEnter}
+            onClick={() => {}}
+            onChange={() => {}}
           />
-          <button onClick={handleItemDelete}>-</button>
+          <ItemAddDeleteBtn
+            variant="outline-secondary"
+            size="sm"
+            onClick={() => {
+              handleItemDelete(item.id);
+            }}
+            disabled={index < 3 ? true : false}
+            data-item={item.id}>
+            -
+          </ItemAddDeleteBtn>
         </div>
       ))}
+      <div className="poll-item-add">
+        <ItemAddDeleteBtn variant="outline-secondary" size="sm" onClick={handleItemAdd}>
+          +
+        </ItemAddDeleteBtn>
+      </div>
     </PollItemsBlock>
-    <div class="poll-item-add">
-      <button onClick={handleItemAdd}>+</button>
-    </div>
   </PollBodyDiv>
 );
 
-const PollFooter = ({ handlePollSave, handleCancel }) => (
+const PollFooter = ({ toCreate, toVote, handleModalClose, handlePollSave }) => (
   <PollFooterDiv>
-    <div class="poll-button-list">
-      <button onClick={handleCancel}>Discard</button>
-      <button onClick={handlePollSave}>Save</button>
-    </div>
+    <PollButtonList>
+      <PollFooterBtn size="sm" variant="danger" onClick={handleModalClose}>
+        Discard
+      </PollFooterBtn>
+      {toCreate ? (
+        <PollFooterBtn size="sm" variant="primary" onClick={handlePollSave}>
+          Save
+        </PollFooterBtn>
+      ) : (
+        ''
+      )}
+      {toVote ? (
+        <PollFooterBtn size="sm" variant="warning" onClick={handlePollSave}>
+          Vote
+        </PollFooterBtn>
+      ) : (
+        ''
+      )}
+    </PollButtonList>
   </PollFooterDiv>
 );
 
 const initialItems = [
   {
     id: 1,
-    content: null,
+    content: '',
+    count: 0,
   },
   {
     id: 2,
-    content: null,
+    content: '',
+    count: 0,
   },
   {
     id: 3,
-    content: null,
+    content: '',
+    count: 0,
   },
 ];
 
-const Poll = ({ pollRedux, handlePollSave, handlePollDelete }) => {
+const Poll = ({ pollRedux, toCreate, handlePollSave, handlePollDelete, handleModalClose }) => {
+  const [items, setItems] = useState(initialItems);
+  let itemId = useRef(4);
+
   const [poll, setPoll] = useState({
-    id: pollRedux ? pollRedux.id : null,
-    userId: pollRedux ? pollRedux.userId : null,
-    title: pollRedux ? pollRedux.title : null,
-    startDate: pollRedux ? pollRedux.startDate : null,
-    endDate: pollRedux ? pollRedux.endDate : null,
-    items: pollRedux ? pollRedux.items : initialItems,
-    result: pollRedux ? pollRedux.result : null,
+    id: pollRedux ? pollRedux.id : '',
+    userId: pollRedux ? pollRedux.userId : '',
+    title: pollRedux ? pollRedux.title : '',
+    startDate: pollRedux ? pollRedux.startDate : '',
+    endDate: pollRedux ? pollRedux.endDate : '',
+    items: pollRedux ? pollRedux.items : items,
+    result: pollRedux ? pollRedux.result : '',
   });
 
   const handleEditClick = (e) => {
@@ -124,20 +168,14 @@ const Poll = ({ pollRedux, handlePollSave, handlePollDelete }) => {
     console.log('e : ', e);
   };
 
-  const handleItemAdd = (e) => {
-    console.log('e : ', e);
-  };
+  const handleItemAdd = (e) => setItems([...items, { id: itemId.current++, content: '' }]);
 
-  const handleItemDelete = (e) => {
-    console.log('e : ', e);
-  };
-
-  const handleCancel = (e) => {
-    console.log('e : ', e);
+  const handleItemDelete = (itemId) => {
+    setItems(items.filter((item) => item.id !== itemId));
   };
 
   return (
-    <PollBlock>
+    <PollBlock width="100%">
       <PollHeader
         title={poll.title}
         pollId={poll.id}
@@ -148,12 +186,16 @@ const Poll = ({ pollRedux, handlePollSave, handlePollDelete }) => {
       <PollBody
         startDate={poll.startDate}
         endDate={poll.endDate}
-        items={poll.items}
+        items={items}
         handleItemEnter={handleItemEnter}
         handleItemAdd={handleItemAdd}
         handleItemDelete={handleItemDelete}
       />
-      <PollFooter handlePollSave={handlePollSave} handleCancel={handleCancel} />
+      <PollFooter
+        toCreate={toCreate}
+        handleModalClose={handleModalClose}
+        handlePollSave={handlePollSave}
+      />
     </PollBlock>
   );
 };

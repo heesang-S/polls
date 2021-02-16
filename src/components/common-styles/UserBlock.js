@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 
 const UserBlock = styled.input`
-  width: 150px;
-  background-color: ${(props) => props.color || 'white'};
+  width: 50px;
+  height: 35px;
+  background-color: ${(props) => props.color || '#B3B6C2'};
 
-  &[disabled] {
+  position: absolute;
+  right: 20px;
+
+  &:disabled {
     cursor: default;
+    border: none;
   }
 `;
 

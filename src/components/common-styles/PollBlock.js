@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
 const PollBlock = styled.div`
-  width: 400px;
+  width: ${(props) => props.width || '400px'};
   background: white;
   border-radius: 2px;
 
-  background-color: orange;
+  overflow-y: auto;
+
+  margin-top: ${(props) => props.marginTop || '0'};
+  box-shadow: 1px 1px 1px black;
 `;
 
 export default PollBlock;
