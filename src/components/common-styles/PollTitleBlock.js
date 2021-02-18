@@ -6,6 +6,7 @@ const PollTitleBlock = styled.input`
   color: #231815;
 
   border: none;
+  text-align: center;
 
   &::placeholder {
     text-align: center;

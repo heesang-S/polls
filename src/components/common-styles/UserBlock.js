@@ -5,7 +5,7 @@ const UserBlock = styled.input`
   height: 35px;
   background-color: ${(props) => props.color || '#B3B6C2'};
 
-  position: absolute;
+  position: ${(props) => props.position || 'absolute'};
   right: 20px;
 
   &:disabled {
