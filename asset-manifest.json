@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/heesang-S/polls/index.html/static/css/main.c447dc79.chunk.css",
-    "main.js": "/heesang-S/polls/index.html/static/js/main.fa17ae24.chunk.js",
-    "main.js.map": "/heesang-S/polls/index.html/static/js/main.fa17ae24.chunk.js.map",
-    "runtime-main.js": "/heesang-S/polls/index.html/static/js/runtime-main.7a837076.js",
-    "runtime-main.js.map": "/heesang-S/polls/index.html/static/js/runtime-main.7a837076.js.map",
-    "static/css/2.150d169a.chunk.css": "/heesang-S/polls/index.html/static/css/2.150d169a.chunk.css",
-    "static/js/2.56afdfae.chunk.js": "/heesang-S/polls/index.html/static/js/2.56afdfae.chunk.js",
-    "static/js/2.56afdfae.chunk.js.map": "/heesang-S/polls/index.html/static/js/2.56afdfae.chunk.js.map",
-    "static/js/3.3f04ff2a.chunk.js": "/heesang-S/polls/index.html/static/js/3.3f04ff2a.chunk.js",
-    "static/js/3.3f04ff2a.chunk.js.map": "/heesang-S/polls/index.html/static/js/3.3f04ff2a.chunk.js.map",
-    "index.html": "/heesang-S/polls/index.html/index.html",
-    "static/css/2.150d169a.chunk.css.map": "/heesang-S/polls/index.html/static/css/2.150d169a.chunk.css.map",
-    "static/css/main.c447dc79.chunk.css.map": "/heesang-S/polls/index.html/static/css/main.c447dc79.chunk.css.map",
-    "static/js/2.56afdfae.chunk.js.LICENSE.txt": "/heesang-S/polls/index.html/static/js/2.56afdfae.chunk.js.LICENSE.txt"
+    "main.css": "/heesang-S/polls/static/css/main.c447dc79.chunk.css",
+    "main.js": "/heesang-S/polls/static/js/main.fa17ae24.chunk.js",
+    "main.js.map": "/heesang-S/polls/static/js/main.fa17ae24.chunk.js.map",
+    "runtime-main.js": "/heesang-S/polls/static/js/runtime-main.a9bc8a83.js",
+    "runtime-main.js.map": "/heesang-S/polls/static/js/runtime-main.a9bc8a83.js.map",
+    "static/css/2.150d169a.chunk.css": "/heesang-S/polls/static/css/2.150d169a.chunk.css",
+    "static/js/2.031be023.chunk.js": "/heesang-S/polls/static/js/2.031be023.chunk.js",
+    "static/js/2.031be023.chunk.js.map": "/heesang-S/polls/static/js/2.031be023.chunk.js.map",
+    "static/js/3.3f04ff2a.chunk.js": "/heesang-S/polls/static/js/3.3f04ff2a.chunk.js",
+    "static/js/3.3f04ff2a.chunk.js.map": "/heesang-S/polls/static/js/3.3f04ff2a.chunk.js.map",
+    "index.html": "/heesang-S/polls/index.html",
+    "static/css/2.150d169a.chunk.css.map": "/heesang-S/polls/static/css/2.150d169a.chunk.css.map",
+    "static/css/main.c447dc79.chunk.css.map": "/heesang-S/polls/static/css/main.c447dc79.chunk.css.map",
+    "static/js/2.031be023.chunk.js.LICENSE.txt": "/heesang-S/polls/static/js/2.031be023.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.7a837076.js",
+    "static/js/runtime-main.a9bc8a83.js",
     "static/css/2.150d169a.chunk.css",
-    "static/js/2.56afdfae.chunk.js",
+    "static/js/2.031be023.chunk.js",
     "static/css/main.c447dc79.chunk.css",
     "static/js/main.fa17ae24.chunk.js"
   ]
